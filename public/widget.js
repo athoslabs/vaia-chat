@@ -232,9 +232,10 @@
 
     /* Book button */
     #vaia-book-btn {
-      display: inline-block;
-      margin: 8px 0 4px 44px;
-      padding: 9px 18px;
+      display: block;
+      text-align: center;
+      margin: 0 0 8px 0;
+      padding: 9px 16px;
       background: linear-gradient(135deg, #3F5BFF 0%, #7C3AED 100%);
       color: #fff;
       border-radius: 10px;
@@ -361,7 +362,10 @@
             </svg>
           </button>
         </div>
-        <div id="vaia-powered">Powered by <a href="https://meetvaia.com" target="_blank">Vaia AI</a></div>
+        <div id="vaia-powered">
+          <a id="vaia-book-btn" href="${CALENDLY_URL}" target="_blank" rel="noopener">📅 Book Your Free AI Audit</a><br>
+          Powered by <a href="https://meetvaia.com" target="_blank">Vaia AI</a>
+        </div>
       </div>
     </div>
   `;
@@ -412,17 +416,6 @@
     if (role === 'bot') {
       wrap.appendChild(icon);
       wrap.appendChild(bubble);
-      // Always show Book button after bot message
-      const bookBtn = document.createElement('a');
-      bookBtn.id = 'vaia-book-btn';
-      bookBtn.href = CALENDLY_URL;
-      bookBtn.target = '_blank';
-      bookBtn.rel = 'noopener';
-      bookBtn.textContent = '📅 Book Your Free AI Audit';
-      // Remove any previous book button before adding new one
-      const prev = msgs.querySelector('#vaia-book-btn');
-      if (prev) prev.remove();
-      msgs.insertBefore(bookBtn, typing);
     } else {
       wrap.appendChild(bubble);
       wrap.appendChild(icon);
