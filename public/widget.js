@@ -2,6 +2,7 @@
   'use strict';
 
   const API_URL = 'https://vaia-chat.onrender.com/chat';
+  const CALENDLY_URL = 'https://calendly.com/rcmorrow-youraisolution/free-ai-readiness-audit';
 
   // ── Styles ──────────────────────────────────────────────────────────────────
   const CSS = `
@@ -378,8 +379,29 @@
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#5EEAD4;text-decoration:underline;">$1</a>')
+      // Markdown links [text](url)
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, (match, linkText, url) => {
+        const cleanUrl = url.includes('calendly.com') ? CALENDLY_URL : url;
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener" style="color:#5EEAD4;text-decoration:underline;">${linkText}</a>`;
+      })
+      // Raw URLs
+      .replace(/(https?:\/\/[^\s<]+)/g, (match, url) => {
+        const cleanUrl = url.includes('calendly.com') ? CALENDLY_URL : url;
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener" style="color:#5EEAD4;text-decoration:underline;">${cleanUrl}</a>`;
+      })
       .replace(/\n/g, '<br>');
+
+    // If the message mentions booking/audit, append a CTA button
+    const lcText = text.toLowerCase();
+    if (role === 'bot' && (lcText.includes('calendly') || lcText.includes('book') && lcText.includes('audit'))) {
+      const btn = document.createElement('a');
+      btn.href = CALENDLY_URL;
+      btn.target = '_blank';
+      btn.rel = 'noopener';
+      btn.style.cssText = 'display:inline-block;margin-top:10px;padding:9px 18px;background:linear-gradient(135deg,#3F5BFF,#7C3AED);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.02em;';
+      btn.textContent = '📅 Book Free AI Audit';
+      bubble.appendChild(btn);
+    }
 
     if (role === 'bot') {
       wrap.appendChild(icon);
