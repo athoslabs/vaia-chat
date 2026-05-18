@@ -237,11 +237,11 @@
       margin: 0 0 8px 0;
       padding: 9px 16px;
       background: linear-gradient(135deg, #3F5BFF 0%, #7C3AED 100%);
-      color: #fff;
+      color: #ffffff !important;
       border-radius: 10px;
       font-size: 13px;
       font-weight: 700;
-      text-decoration: none;
+      text-decoration: none !important;
       letter-spacing: 0.03em;
       transition: opacity 0.2s, transform 0.15s;
     }
