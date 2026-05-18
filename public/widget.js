@@ -232,10 +232,9 @@
 
     /* Book button */
     #vaia-book-btn {
-      display: block;
-      text-align: center;
-      margin: 0 0 10px 0;
-      padding: 10px 16px;
+      display: inline-block;
+      margin: 8px 0 4px 44px;
+      padding: 9px 18px;
       background: linear-gradient(135deg, #3F5BFF 0%, #7C3AED 100%);
       color: #fff;
       border-radius: 10px;
@@ -353,7 +352,6 @@
       </div>
 
       <div id="vaia-input-area">
-        <a id="vaia-book-btn" href="${CALENDLY_URL}" target="_blank" rel="noopener">📅 Book Your Free AI Audit</a>
         <div id="vaia-input-row">
           <textarea id="vaia-input" rows="1" placeholder="Ask me anything…" maxlength="500"></textarea>
           <button id="vaia-send" aria-label="Send message">
@@ -409,21 +407,22 @@
       })
       .replace(/\n/g, '<br>');
 
-    // If the message mentions booking/audit, append a CTA button
-    const lcText = text.toLowerCase();
-    if (role === 'bot' && (lcText.includes('calendly') || lcText.includes('book') && lcText.includes('audit'))) {
-      const btn = document.createElement('a');
-      btn.href = CALENDLY_URL;
-      btn.target = '_blank';
-      btn.rel = 'noopener';
-      btn.style.cssText = 'display:inline-block;margin-top:10px;padding:9px 18px;background:linear-gradient(135deg,#3F5BFF,#7C3AED);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.02em;';
-      btn.textContent = '📅 Book Free AI Audit';
-      bubble.appendChild(btn);
-    }
+
 
     if (role === 'bot') {
       wrap.appendChild(icon);
       wrap.appendChild(bubble);
+      // Always show Book button after bot message
+      const bookBtn = document.createElement('a');
+      bookBtn.id = 'vaia-book-btn';
+      bookBtn.href = CALENDLY_URL;
+      bookBtn.target = '_blank';
+      bookBtn.rel = 'noopener';
+      bookBtn.textContent = '📅 Book Your Free AI Audit';
+      // Remove any previous book button before adding new one
+      const prev = msgs.querySelector('#vaia-book-btn');
+      if (prev) prev.remove();
+      msgs.insertBefore(bookBtn, typing);
     } else {
       wrap.appendChild(bubble);
       wrap.appendChild(icon);
