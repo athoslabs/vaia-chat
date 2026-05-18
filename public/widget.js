@@ -230,6 +230,23 @@
       40% { transform: translateY(-6px); opacity: 1; }
     }
 
+    /* Book button */
+    #vaia-book-btn {
+      display: block;
+      text-align: center;
+      margin: 0 0 10px 0;
+      padding: 10px 16px;
+      background: linear-gradient(135deg, #3F5BFF 0%, #7C3AED 100%);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    #vaia-book-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
     /* Input area */
     #vaia-input-area {
       padding: 12px 14px 16px;
@@ -336,6 +353,7 @@
       </div>
 
       <div id="vaia-input-area">
+        <a id="vaia-book-btn" href="${CALENDLY_URL}" target="_blank" rel="noopener">📅 Book Your Free AI Audit</a>
         <div id="vaia-input-row">
           <textarea id="vaia-input" rows="1" placeholder="Ask me anything…" maxlength="500"></textarea>
           <button id="vaia-send" aria-label="Send message">
